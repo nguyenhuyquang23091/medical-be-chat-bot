@@ -1,0 +1,17 @@
+server:
+  port: 8080
+
+spring:
+  data:
+    mongodb:
+      uri: "mongodb://localhost:27017/chat-history"
+
+  ai:
+    model:
+      base-url: "http://localhost:1234"
+      completions-endpoint: "/v1/chat/completions"
+      default-model: "llama3-3b-medical-cot"
+      temperature: 0.7
+
+
+
