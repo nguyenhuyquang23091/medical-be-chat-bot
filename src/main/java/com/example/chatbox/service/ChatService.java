@@ -44,9 +44,6 @@ public class ChatService {
     ChatMapper chatMapper;
     LLMService llmService;
     public ChatResponse createChat(ChatRequest chatRequest, String conversationId){
-
-
-
         //default instruction
         List<LLMRequest.Message> messages = new ArrayList<>();
         messages.add(LLMRequest.Message.builder()
@@ -68,7 +65,7 @@ public class ChatService {
 
         LLMRequest llmRequest =
                 LLMRequest.builder()
-                        .modelName(llmModel)
+                        .model(llmModel)
                         .messages(messages)
                         .temperature(temperature)
                         .max_tokens(token)
@@ -91,7 +88,6 @@ public class ChatService {
                 ,assistantContent
                 , llmModel
                 ,conversationId
-
         );
         return chatMapper.toChatResponse(chatHistoryRepository.save(chatEntity));
     }

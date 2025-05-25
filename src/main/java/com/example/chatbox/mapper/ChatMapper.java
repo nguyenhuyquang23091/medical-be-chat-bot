@@ -15,7 +15,7 @@ public interface ChatMapper {
             @Mapping(source = "chatRequest.content", target = "userMessage"),
             // These sources come from the additional parameters we're adding to the method
             @Mapping(source = "assistantResponseContent", target = "assistantResponse"),
-            @Mapping(source = "modelName", target = "modelUsed"),
+            @Mapping(source = "model", target = "modelUsed"),
             @Mapping(source = "conversationId", target = "chatId"),
             @Mapping(target = "id", ignore = true),
     })
@@ -23,7 +23,7 @@ public interface ChatMapper {
     ChatEntity toChatEntity(
             ChatRequest chatRequest,
             String assistantResponseContent, // LLM's reply text
-            String modelName,                // Model used for the reply
+            String model,                // Model used for the reply
             String conversationId            // ID for the whole chat session
     );
 

@@ -13,7 +13,7 @@ import java.util.List;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class LLMRequest {
-    private String modelName;
+    private String model;
 
     @NotBlank(message = "messages can't not be blank")
     private List<Message> messages;

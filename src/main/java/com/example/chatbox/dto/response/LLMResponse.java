@@ -19,6 +19,7 @@ public class LLMResponse {
 
     String id;
     String object;
+    long created;
     String model;
 
     List<Choice> choices;
