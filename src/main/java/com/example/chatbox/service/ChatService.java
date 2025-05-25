@@ -24,13 +24,22 @@ import java.util.List;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
-@Builder
 public class ChatService {
 
 
     @Value("${spring.ai.model.default-model}")
     @NonFinal
     String llmModel;
+
+    @Value("${spring.ai.model.temperature}")
+    @NonFinal
+    double temperature;
+
+    @Value("${spring.ai.model.default_token}")
+    @NonFinal
+    int token;
+
+
     ChatHistoryRepository chatHistoryRepository;
     ChatMapper chatMapper;
     LLMService llmService;
@@ -40,10 +49,10 @@ public class ChatService {
 
         //default instruction
         List<LLMRequest.Message> messages = new ArrayList<>();
-            messages.add(LLMRequest.Message.builder()
-                            .role("system")
-                            .content("You are a helpful medical assistance")
-                    .build());
+        messages.add(LLMRequest.Message.builder()
+                .role("system")
+                .content("You are a helpful medical assistance")
+                .build());
 
         if (chatRequest.getContent() == null || chatRequest.getContent().trim().isEmpty()) {
             log.warn("User input is empty for conversationId: {}", conversationId);
@@ -52,8 +61,8 @@ public class ChatService {
         }
 
         messages.add(LLMRequest.Message.builder()
-                        .role("user")
-                        .content(chatRequest.getContent())
+                .role("user")
+                .content(chatRequest.getContent())
                 .build());
 
 
@@ -61,8 +70,8 @@ public class ChatService {
                 LLMRequest.builder()
                         .modelName(llmModel)
                         .messages(messages)
-                        .temperature(0.7)
-                        .max_tokens(300)
+                        .temperature(temperature)
+                        .max_tokens(token)
                         .build();
         //default message
         String assistantContent;
@@ -77,7 +86,8 @@ public class ChatService {
             throw new RuntimeException("Error" + e);
         }
 
-        ChatEntity chatEntity = chatMapper.toChatEntity(chatRequest
+        ChatEntity chatEntity = chatMapper.toChatEntity(
+                chatRequest
                 ,assistantContent
                 , llmModel
                 ,conversationId

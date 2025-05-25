@@ -13,6 +13,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
@@ -22,23 +23,20 @@ import org.springframework.web.client.RestTemplate;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 public class LLMService {
+    RestClient restClient;
 
-    RestTemplate restTemplate;
-
-    @Value("${spring.ai.model.base-url}")
     @NonFinal
+    @Value("${spring.ai.model.base-url}")
     protected String llmApiurl;
 
     public LLMResponse getLlmResponse(LLMRequest request){
-        log.info("Sending request {}", llmApiurl);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        HttpEntity<LLMRequest> entity = new HttpEntity<>(request, headers);
-
         try{
-            LLMResponse response = restTemplate.postForObject(llmApiurl, entity, LLMResponse.class);
-            return  response;
+            LLMResponse llmResponse =   restClient.post()
+                    .header("Content-Type", "application/json")
+                    .body(request)
+                    .retrieve()
+                    .body(LLMResponse.class);
+            return llmResponse;
 
         } catch (RestClientException e) {
             log.error("Error while calling LLM service at URL [{}]. Message: {}", llmApiurl, e.getMessage(), e); // Logs stack trace too
