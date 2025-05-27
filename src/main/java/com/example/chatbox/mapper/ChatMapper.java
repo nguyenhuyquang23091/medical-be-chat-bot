@@ -21,13 +21,13 @@ public interface ChatMapper {
     })
 
     ChatEntity toChatEntity(
-            ChatRequest chatRequest,
-            String assistantResponseContent, // LLM's reply text
-            String model,                // Model used for the reply
-            String conversationId            // ID for the whole chat session
+            ChatRequest chatRequest, //chat request
+            String assistantResponseContent, // llm response
+            String model, // llm request
+            String conversationId // specific chat id
     );
 
-
     @Mapping(source = "assistantResponse", target = "assistantMessage")
+    @Mapping(source = "chatId", target = "conversationId")
     ChatResponse toChatResponse(ChatEntity chatEntity);
 }

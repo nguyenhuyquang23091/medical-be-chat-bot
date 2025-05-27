@@ -6,6 +6,9 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.Instant;
+import java.time.LocalDate;
+
 
 @Getter
 @Setter
@@ -18,8 +21,9 @@ public class ChatEntity {
     @Id
     String id;
     String modelUsed;
-    String chatId;
+    String conversationId;
     String userMessage;
     String assistantResponse;
+    Instant timestamp;
 
 }

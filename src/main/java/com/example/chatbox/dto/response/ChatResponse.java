@@ -14,5 +14,6 @@ import lombok.AccessLevel;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ChatResponse {
     String assistantMessage;
+    String conversationId;
 
 }

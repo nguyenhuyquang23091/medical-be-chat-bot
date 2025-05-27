@@ -2,6 +2,7 @@ package com.example.chatbox.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -15,14 +16,14 @@ import java.util.List;
 public class LLMRequest {
     private String model;
 
-    @NotBlank(message = "messages can't not be blank")
+    @NotNull(message = "messages can't not be blank")
     private List<Message> messages;
 
-    @NotBlank(message = "temperature can't not be blank")
+    @NotNull(message = "temperature can't not be blank")
     @JsonProperty("temperature")
     double temperature;
 
-    @NotBlank(message = "max_tokens can't not be blank")
+    @NotNull(message = "max_tokens can't not be blank")
     @JsonProperty("max_tokens")
     int max_tokens;
 
@@ -34,7 +35,7 @@ public class LLMRequest {
     @FieldDefaults(level = AccessLevel.PRIVATE)
     public static class Message {
         String role;
-        @NotBlank(message = "content can't not be blank")
+        @NotNull(message = "content can't not be blank")
         String content;
     }
 }

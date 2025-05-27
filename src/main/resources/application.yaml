@@ -12,6 +12,10 @@ spring:
       default-model: "llama3-3b-medical-cot"
       temperature: 0.7
       default_token : 300
+  app:
+    chat:
+      history:
+        max-turns: 10
 
 
 
