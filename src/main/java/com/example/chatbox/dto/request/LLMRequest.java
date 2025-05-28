@@ -14,10 +14,10 @@ import java.util.List;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class LLMRequest {
-    private String model;
+     String model;
 
     @NotNull(message = "messages can't not be blank")
-    private List<Message> messages;
+     List<Message> messages;
 
     @NotNull(message = "temperature can't not be blank")
     @JsonProperty("temperature")

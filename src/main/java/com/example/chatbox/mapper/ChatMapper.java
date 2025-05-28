@@ -11,23 +11,7 @@ import org.mapstruct.Mappings; // Import this
 @Mapper(componentModel = "spring")
 public interface ChatMapper {
 
-    @Mappings({
-            @Mapping(source = "chatRequest.content", target = "userMessage"),
-            // These sources come from the additional parameters we're adding to the method
-            @Mapping(source = "assistantResponseContent", target = "assistantResponse"),
-            @Mapping(source = "model", target = "modelUsed"),
-            @Mapping(source = "conversationId", target = "chatId"),
-            @Mapping(target = "id", ignore = true),
-    })
-
-    ChatEntity toChatEntity(
-            ChatRequest chatRequest, //chat request
-            String assistantResponseContent, // llm response
-            String model, // llm request
-            String conversationId // specific chat id
-    );
-
-    @Mapping(source = "assistantResponse", target = "assistantMessage")
-    @Mapping(source = "chatId", target = "conversationId")
-    ChatResponse toChatResponse(ChatEntity chatEntity);
+    @Mapping(source = "chatEntity.chatId", target = "conversationId")
+    @Mapping(source = "assistantContent", target = "assistantMessage")
+    ChatResponse toChatResponse(ChatEntity chatEntity, String assistantContent);
 }

@@ -24,5 +24,4 @@ public class ChatRequest {
     String conversationId;
     // Optional system instructions that can override default behavior
 
-    String systemInstructions;
 }
